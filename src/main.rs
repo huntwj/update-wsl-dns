@@ -24,6 +24,12 @@ struct Search<'a> {
     suffixes_extra: Regex,
 }
 
+const SERVERS_HEADER_REGEX: &str =
+    r"DNS Servers(.+)[^0-9](((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4})";
+const SERVERS_EXTRA_REGEX: &str = r"^[^0-9]+(((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4})";
+const SUFFIXES_HEADER_REGEX: &str = r"DNS Suffix Search List(.)+: ((([a-z])+\.?)+)";
+const SUFFIXES_EXTRA_REGEX: &str = r"^\s+((([a-z])+\.?)+)";
+
 impl<'a> Default for Search<'a> {
     fn default() -> Self {
         Self {
@@ -32,16 +38,10 @@ impl<'a> Default for Search<'a> {
             state: Default::default(),
 
             // These .expects are acceptable because they are hardcoded.
-            servers_header: Regex::new(
-                r"DNS Servers(.+)[^0-9](((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4})",
-            )
-            .expect("Invalid DNS Servers header regex"),
-            servers_extra: Regex::new(r"^[^0-9]+(((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4})")
-                .expect("Invalid extra DNS server regex"),
-            suffixes_header: Regex::new(r"DNS Suffix Search List(.)+: ((([a-z])+\.?)+)")
-                .expect("Invalid DNS Suffixes header regex"),
-            suffixes_extra: Regex::new(r"^\s+((([a-z])+\.?)+)")
-                .expect("Invalid extra DNS Suffix regex"),
+            servers_header: Regex::new(SERVERS_HEADER_REGEX).unwrap(),
+            servers_extra: Regex::new(SERVERS_EXTRA_REGEX).unwrap(),
+            suffixes_header: Regex::new(SUFFIXES_HEADER_REGEX).unwrap(),
+            suffixes_extra: Regex::new(SUFFIXES_EXTRA_REGEX).unwrap(),
         }
     }
 }
