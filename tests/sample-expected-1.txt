@@ -1,0 +1,11 @@
+# Auto-generated resolv.conf file
+#
+# This uses the output of ipconfig.exe on the Windows side to determine
+# valid DNS servers and search suffixes.
+
+search onto.ontoinnovation.com ontoinnovation.com corp.nanometrics.com rtec.net
+
+nameserver 172.16.12.139
+nameserver 172.16.12.138
+nameserver 75.75.75.75
+nameserver 75.75.76.76
