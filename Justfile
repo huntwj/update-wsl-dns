@@ -4,7 +4,8 @@ desired_link_target := "/etc/resolv.conf.autodetect"
 current_link_target := ```readlink -f "/etc/resolv.conf"```
 
 update:
-  @cargo --quiet run | sudo tee {{ desired_link_target }} > /dev/null
+  @cargo --quiet run | sudo tee {{ desired_link_target }}.next > /dev/null
+  @sudo cp {{ desired_link_target }}.next {{ desired_link_target }}
   @echo Success! {{ desired_link_target }} written.
   @{{ if current_link_target == desired_link_target { "just display-link" } else { "echo Note: /etc/resolv.conf is not linked correctly." } }}
 
